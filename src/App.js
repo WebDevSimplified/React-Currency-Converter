@@ -1,76 +1,99 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import CurrencyRow from './CurrencyRow'
+import  CurrencyInfo  from './currency';
 
-const BASE_URL = 'https://api.exchangeratesapi.io/latest'
+const API_URL =  ('https://api.exchangerate-api.com/v4/latest/USD');
 
-function App() {
-  const [currencyOptions, setCurrencyOptions] = useState([])
-  const [fromCurrency, setFromCurrency] = useState()
-  const [toCurrency, setToCurrency] = useState()
-  const [exchangeRate, setExchangeRate] = useState()
-  const [amount, setAmount] = useState(1)
-  const [amountInFromCurrency, setAmountInFromCurrency] = useState(true)
 
-  let toAmount, fromAmount
-  if (amountInFromCurrency) {
-    fromAmount = amount
-    toAmount = amount * exchangeRate
-  } else {
-    toAmount = amount
-    fromAmount = amount / exchangeRate
-  }
+function App ()  {
+  /*states*/ 
+  const [currencies, setCurrencies] = useState([])
+  const [baseCurrency, setBaseCurrency] = useState()
+  const [newCurrency, setNewCurrency] = useState()
+  const [baseAmount, setBaseAmount] = useState(100)
+  const [newAmount, setnewAmount] = useState(true)
+  const [exchangeRate, setExchangeRate] = useState([])
 
-  useEffect(() => {
-    fetch(BASE_URL)
+  /*new Amounts */ 
+   let toAmount, fromAmount;
+    if ( newAmount) {
+      fromAmount = baseAmount
+      toAmount = baseAmount * exchangeRate
+    } else {
+      toAmount = baseAmount
+      fromAmount = baseAmount / exchangeRate
+    }
+ 
+    /*get api*/ 
+    useEffect(() => {
+      fetch(API_URL)
       .then(res => res.json())
       .then(data => {
-        const firstCurrency = Object.keys(data.rates)[0]
-        setCurrencyOptions([data.base, ...Object.keys(data.rates)])
-        setFromCurrency(data.base)
-        setToCurrency(firstCurrency)
-        setExchangeRate(data.rates[firstCurrency])
-      })
-  }, [])
+        setCurrencies([data.base, ...Object.keys(data.rates)])
+        setBaseCurrency(data.base)
+        setExchangeRate(data['rates'])
+    });
 
+  }, []);
+
+  /*get new currency*/ 
   useEffect(() => {
-    if (fromCurrency != null && toCurrency != null) {
-      fetch(`${BASE_URL}?base=${fromCurrency}&symbols=${toCurrency}`)
+    if (baseCurrency != null && newCurrency != null) {
+      fetch(`${API_URL}?base=${baseCurrency}&symbols=${newCurrency}`)
         .then(res => res.json())
-        .then(data => setExchangeRate(data.rates[toCurrency]))
+        .then(data => setExchangeRate(data.rates[newCurrency]))
     }
-  }, [fromCurrency, toCurrency])
+  }, [baseCurrency, newCurrency])
 
-  function handleFromAmountChange(e) {
-    setAmount(e.target.value)
-    setAmountInFromCurrency(true)
-  }
+      /*initial currency*/ 
+      function handleBaseCurrency(e) {
+        setBaseAmount(e.target.value)
+        setBaseCurrency(false)
+      }
 
-  function handleToAmountChange(e) {
-    setAmount(e.target.value)
-    setAmountInFromCurrency(false)
-  }
+      /*converted currency*/ 
+      function handleNewCurrency(e) {
+        setBaseAmount(e.target.value)
+        setNewCurrency(true)
+      }
 
-  return (
-    <>
-      <h1>Convert</h1>
-      <CurrencyRow
-        currencyOptions={currencyOptions}
-        selectedCurrency={fromCurrency}
-        onChangeCurrency={e => setFromCurrency(e.target.value)}
-        onChangeAmount={handleFromAmountChange}
-        amount={fromAmount}
-      />
-      <div className="equals">=</div>
-      <CurrencyRow
-        currencyOptions={currencyOptions}
-        selectedCurrency={toCurrency}
-        onChangeCurrency={e => setToCurrency(e.target.value)}
-        onChangeAmount={handleToAmountChange}
-        amount={toAmount}
-      />
-    </>
-  );
-}
+    return (
+      <div className="App container mt-5">
+        <h4>Currency Calculator</h4>
+        <p>Convert the currency</p>
+     
+          <div  className="Numbers mt-5">
+            <input className='currency-name'  defaultValue={baseAmount} onChangeAmount={handleBaseCurrency} type='number' ></input>
+              <CurrencyInfo
+                currency = {currencies}
+                selected = {newCurrency}
+                onChangeCurrency={e => setBaseCurrency(e.target.value)}
+                onChangeAmount={handleBaseCurrency}
+                amount={fromAmount}
+                />
+              <h6 className='convert'>convert to: </h6>
+                
+              <CurrencyInfo
+                currency = {currencies}
+                selected = {newCurrency}
+                onChangeCurrency={e => setNewCurrency(e.target.value)}
+                onChangeAmount={handleNewCurrency}
+                amount={toAmount}
+                />
+
+                <button type="button" class="btn btn-primary" 
+                onClick={() => setnewAmount}
+                  onChangeAmount={handleNewCurrency}
+                  amount={newAmount}
+                  value={newCurrency}
+                  >Convert</button>
+          </div>
+          <div className='result'>
+            <p id='result-text' value={newCurrency}>{baseAmount} {baseCurrency} = {newCurrency} .</p>
+          </div>
+      </div>
+    );
+  };
 
 export default App;
+
