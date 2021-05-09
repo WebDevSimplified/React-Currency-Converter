@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import CurrencyRow from './CurrencyRow'
 
-const BASE_URL = 'https://api.exchangeratesapi.io/latest'
+// Replace the access code with the code you get assigned with from: https://exchangeratesapi.io/
+const ACCESS_KEY = "YOUR_KEY_GOES_HERE"
+// Free account requires http access as https is not supported on the free account.
+const BASE_URL = `http://api.exchangeratesapi.io/latest?access_key=${ACCESS_KEY}`
 
 function App() {
   const [currencyOptions, setCurrencyOptions] = useState([])
@@ -35,7 +38,7 @@ function App() {
 
   useEffect(() => {
     if (fromCurrency != null && toCurrency != null) {
-      fetch(`${BASE_URL}?base=${fromCurrency}&symbols=${toCurrency}`)
+      fetch(BASE_URL)
         .then(res => res.json())
         .then(data => setExchangeRate(data.rates[toCurrency]))
     }
