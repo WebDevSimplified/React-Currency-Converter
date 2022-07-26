@@ -8,7 +8,8 @@ body {
 }
 
 body,
-h1 {
+h1,
+p {
 	padding: 0;
 	margin: 0;
 }
