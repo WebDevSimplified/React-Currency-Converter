@@ -1,0 +1,10 @@
+/*
+    Currencies list styles
+*/
+
+.currency {
+	padding: 10px 20px;
+	font-size: 2em;
+	color: rgb(80, 80, 80);
+	border-radius: 5px;
+}

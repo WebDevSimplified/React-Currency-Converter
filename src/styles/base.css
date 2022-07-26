@@ -1,0 +1,21 @@
+/*
+    General styles
+*/
+
+body {
+	background: rgb(245, 245, 245);
+	font-family: sans-serif;
+}
+
+body,
+h1 {
+	padding: 0;
+	margin: 0;
+}
+
+#root {
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
