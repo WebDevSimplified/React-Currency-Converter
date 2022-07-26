@@ -2,4 +2,16 @@
     Export all constants from here
 */
 
-export const currencyUrl = "https://api.exchangeratesapi.io/latest";
+// Currency conversion provider base url
+const currencyUrl = "https://api.exchangeratesapi.io/latest";
+
+// Default context state
+const defaultState = {
+    loading: true,
+    currencies: ["USD", "EUR"]
+};
+
+export {
+    currencyUrl,
+    defaultState
+};
