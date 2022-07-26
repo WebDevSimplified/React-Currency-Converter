@@ -1,4 +1,4 @@
-import React, { useState, useContext, createContext } from "react";
+import React, { useState, useContext, createContext, useMemo } from "react";
 import { defaultState } from "helpers/const";
 
 /*
@@ -14,13 +14,53 @@ const CurrencyProvider = ({ children }) => {
     const [loading, setLoading] = useState(defaultState.loading);
     // Holds all currencies list
     const [currencies, setCurrencies] = useState(defaultState.currencies);
+    // Currently selected currencies
+    const [curr1, setCurr1] = useState(defaultState.curr1);
+    const [curr2, setCurr2] = useState(defaultState.curr2);
+    // Current values according to current selected currencies
+    const [value1, setValue1] = useState(defaultState.value1);
+    const [value2, setValue2] = useState(defaultState.value2);
+
+    // Changes current selected currency
+    const switchCurrency = (name, curr) => {
+        if (name === "curr1") {
+            if (curr === curr2) {
+                setCurr2(curr1);
+                setCurr1(curr);
+            }
+            else
+                setCurr1(curr);
+        }
+        else {
+            if (curr === curr1) {
+                setCurr1(curr2);
+                setCurr2(curr);
+            }
+            else
+                setCurr2(curr);
+        }
+    };
+
+    // Updates input value
+    const updateValue = (name, value) => {
+        if (name === "value1")
+            setValue1(value);
+        else
+            setValue2(value);
+    };
+
+    // Memoize data to prevent futile re-renders
+    const memoizedValues = useMemo(() => ({
+        loading,
+        currencies,
+        curr1, curr2,
+        value1, value2,
+        switchCurrency, updateValue
+    }), [loading, currencies, curr1, curr2, value1, value2]);
 
     return (
         <CurrencyContext.Provider
-            value={{
-                loading,
-                currencies
-            }}
+            value={memoizedValues}
         >
             {children}
         </CurrencyContext.Provider>

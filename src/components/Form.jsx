@@ -18,14 +18,14 @@ const Form = () => {
     return (
         <form className="form">
             <div className="form__group">
-                <Input />
-                <Currency list={list} />
+                <Input name="value1" />
+                <Currency name="curr1" />
             </div>
             {!loading && <p className="form__equals">=</p>}
             {loading && <Loading />}
             <div className="form__group">
-                <Input />
-                <Currency list={list} />
+                <Input name="value2" />
+                <Currency name="curr2" />
             </div>
         </form>
     );
