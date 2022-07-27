@@ -24,7 +24,7 @@ const Form = () => {
             {!loading && <p className="form__equals">=</p>}
             {loading && <Loading />}
             <div className="form__group">
-                <Input name="value2" />
+                <Input name="value2" disabled={true} />
                 <Currency name="curr2" />
             </div>
         </form>

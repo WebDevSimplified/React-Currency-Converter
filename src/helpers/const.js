@@ -3,19 +3,26 @@
 */
 
 // Currency conversion provider base url
-const currencyUrl = "https://api.exchangeratesapi.io/latest";
+const currencyUrl = process.env.REACT_APP_BASEURL;
 
 // Default context state
 const defaultState = {
-    loading: false,
-    currencies: ["USD", "EUR"],
-    curr1: "USD",
-    curr2: "EUR",
+    loading: true,
+    currencies: ["EUR", "MGA"],
+    curr1: "EUR",
+    curr2: "MGA",
     value1: 1,
-    value2: 1
+    value2: 4200
+};
+
+// Axios request headers
+const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json"
 };
 
 export {
     currencyUrl,
-    defaultState
+    defaultState,
+    headers
 };

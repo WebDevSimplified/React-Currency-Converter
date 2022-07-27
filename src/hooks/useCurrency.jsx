@@ -1,5 +1,6 @@
-import React, { useState, useContext, createContext, useMemo } from "react";
+import React, { useState, useEffect, useContext, createContext, useMemo } from "react";
 import { defaultState } from "helpers/const";
+import { convertCurrency, getCurrencies } from "helpers/service";
 
 /*
     Currency hook and context
@@ -20,6 +21,21 @@ const CurrencyProvider = ({ children }) => {
     // Current values according to current selected currencies
     const [value1, setValue1] = useState(defaultState.value1);
     const [value2, setValue2] = useState(defaultState.value2);
+
+    // At hook initialization
+    useEffect(() => {
+        getCurrencies()
+            .then(setCurrencies)
+            .then(() => convertCurrency(defaultState.curr1, defaultState.curr2))
+            .then(setValue2)
+            .then(() => setLoading(false))
+            .catch(err => console.error(err));
+    }, []);
+
+    // Watch currency change
+    useEffect(() => {
+        convert();
+    }, [curr1, curr2]);
 
     // Changes current selected currency
     const switchCurrency = (name, curr) => {
@@ -49,13 +65,24 @@ const CurrencyProvider = ({ children }) => {
             setValue2(value);
     };
 
+    // Run conversion
+    const convert = () => {
+        if (!loading) {
+            setLoading(true);
+            convertCurrency(defaultState.curr1, defaultState.curr2)
+                .then((result) => setValue2(result * value1))
+                .then(() => setLoading(false))
+                .catch(err => console.error(err));
+        }
+    };
+
     // Memoize data to prevent futile re-renders
     const memoizedValues = useMemo(() => ({
         loading,
         currencies,
         curr1, curr2,
         value1, value2,
-        switchCurrency, updateValue
+        switchCurrency, updateValue, convert
     }), [loading, currencies, curr1, curr2, value1, value2]);
 
     return (
