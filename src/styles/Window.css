@@ -1,0 +1,24 @@
+/*
+    Currency window styles
+*/
+
+.window {
+	width: 700px;
+	border-radius: 10px;
+	background: white;
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+	text-align: center;
+}
+
+.window__title {
+	font-size: 4em;
+	color: rgb(60, 60, 60);
+	padding: 20px;
+}
+
+.window__divider {
+	width: calc(100% - 40px);
+	margin: 0 20px;
+	height: 1px;
+	background: rgb(200, 200, 200);
+}

@@ -1,0 +1,20 @@
+/*
+    Input component styles
+*/
+
+.input {
+	padding: 10px 20px;
+	font-size: 2em;
+	color: rgb(60, 60, 60);
+	border-radius: 5px 0 0 5px;
+	text-align: center;
+	border: 1px rgb(100, 100, 100) solid;
+	border-right: 0;
+	flex: 1;
+}
+
+.input:disabled {
+	color: rgb(140, 140, 140);
+	pointer-events: none;
+	background: rgb(220, 220, 220);
+}

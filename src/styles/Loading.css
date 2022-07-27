@@ -1,0 +1,84 @@
+/*
+    Loading spinner styles
+*/
+
+@keyframes loadingAnimation {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+.loading {
+	font-size: 10px;
+	text-indent: -9999em;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: rgb(60, 60, 60);
+	background: -moz-linear-gradient(
+		left,
+		rgb(60, 60, 60) 10%,
+		rgba(255, 255, 255, 0) 42%
+	);
+	background: -webkit-linear-gradient(
+		left,
+		rgb(60, 60, 60) 10%,
+		rgba(255, 255, 255, 0) 42%
+	);
+	background: -o-linear-gradient(
+		left,
+		rgb(60, 60, 60) 10%,
+		rgba(255, 255, 255, 0) 42%
+	);
+	background: -ms-linear-gradient(
+		left,
+		rgb(60, 60, 60) 10%,
+		rgba(255, 255, 255, 0) 42%
+	);
+	background: linear-gradient(
+		to right,
+		rgb(60, 60, 60) 10%,
+		rgba(255, 255, 255, 0) 42%
+	);
+
+	position: relative;
+	-webkit-animation: loadingAnimation 1.4s infinite linear;
+	animation: loadingAnimation 1.4s infinite linear;
+	-webkit-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	transform: translateZ(0);
+	overflow: hidden;
+	margin-top: 24px;
+	margin-bottom: 24px;
+	display: inline-block;
+}
+
+.loading:before {
+	width: 50%;
+	height: 50%;
+	background: rgb(60, 60, 60);
+	border-radius: 100% 0 0 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	content: "";
+}
+
+.loading:after {
+	background: white;
+	width: 75%;
+	height: 75%;
+	border-radius: 50%;
+	content: "";
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}

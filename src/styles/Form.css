@@ -1,0 +1,17 @@
+/*
+    Form styles
+*/
+
+.form {
+	padding: 50px 20px;
+}
+
+.form__group {
+	display: flex;
+}
+
+.form__equals {
+	font-size: 5em;
+	text-align: center;
+	color: rgb(60, 60, 60);
+}

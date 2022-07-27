@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
 import CurrencyRow from './CurrencyRow'
 
 const BASE_URL = 'https://api.exchangeratesapi.io/latest'
