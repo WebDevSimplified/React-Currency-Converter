@@ -1,4 +1,4 @@
-import React, { StrictMode } from "react";
+import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "components/Window";
 import "styles/index.css";
@@ -10,9 +10,5 @@ import "styles/index.css";
 // In react >= 18, first tell where is the root of the app
 const root = createRoot(document.getElementById("root"));
 
-// Render the app in strict mode
-root.render(
-    <StrictMode>
-        <App />
-    </StrictMode>
-);
+// Render the app
+root.render(<App />);
