@@ -69,7 +69,7 @@ const CurrencyProvider = ({ children }) => {
     const convert = () => {
         if (!loading) {
             setLoading(true);
-            convertCurrency(defaultState.curr1, defaultState.curr2)
+            convertCurrency(curr1, curr2)
                 .then((result) => setValue2(result * value1))
                 .then(() => setLoading(false))
                 .catch(err => console.error(err));

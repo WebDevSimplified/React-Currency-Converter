@@ -4,7 +4,7 @@ import http from "helpers/http";
 */
 
 // Gets all currencies list
-const getCurrencies = () => http.get("list");
+const getCurrencies = () => http.get("list").then(result => Object.keys(result));
 
 // Converts currency
 const convertCurrency = (from, to) => http.get(`convert/${from}/${to}`);
